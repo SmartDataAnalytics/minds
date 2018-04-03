@@ -1,9 +1,95 @@
 <!DOCTYPE html>
 <html>
+
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head!-->
+
+    <!-- Bootstrap core CSS -->
+    <link href="./resources/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="./resources/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
+    <!-- jQuery links [in order: jQuery, jQuery UI, jQuery UI CSS] -->
+    <script type="text/javascript" src="./resources/jquery-1.11.3.min.js"></script>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
     <title>MINDS</title>
   </head>
+
   <body>
-    <h1>MINDS - Maths INsiDe SPARQL</h1>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">MINDS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+	    <li><a href="#Info">General</a></li>
+            <li><a href="#HowTo">How-To?</a></li>
+            <li><a href="#Details">Technical Details</a></li>
+	    <li><a href="#Contact">Team &amp; Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More...<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+		<li><a href="https://github.com/SmartDataAnalytics/minds">Source Code</a></li>
+                <li><a href="./LICENSE">License</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Other links</li>
+                <li><a target="_blank" href="http://sda.cs.uni-bonn.de/">SDA</a></li>
+		<li><a target="_blank" href="https://www.uni-bonn.de/the-university?set_language=en">Bonn University</a></li>
+		<li><a target="_blank" href="https://www.iais.fraunhofer.de/en.html">Fraunhofer IAIS</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <div class="jumbotron">
+        <h1>MINDS - Maths INsiDe SPARQL</h1>
+        <h2>A translator of mathematical formulae into SPARQL bindings</h2>
+      </div>
+
+      <div class="well">
+	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Info">General Info.</h3>
+      </div>
+      
+      <div class="well">
+	<h3 style="padding-top: 50px ; margin-top: -40px;" id="HowTo">How-To?</h3>
+      </div>
+
+      <div class="well">
+	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Details">Technical Details</h3>
+      </div>
+      
+      <div class="well">
+	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Contact">Contact</h3>
+      </div>
+      
+    </div>
+    
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">MINDS Project, 2018</p>
+      </div>
+    </footer>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="./resources/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
   </body>
+  
 </html>
