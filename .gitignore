@@ -1,0 +1,10 @@
+# Some rules to ignore files i git.
+
+# Files from python.
+*.pyc
+
+# Files from ply.
+*_parsetab.py
+
+# Temporary files.
+*~
