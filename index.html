@@ -61,11 +61,41 @@
 
       <div class="jumbotron">
         <h1>MINDS - Maths INsiDe SPARQL</h1>
-        <h2>A translator of mathematical formulae into SPARQL bindings</h2>
+        <h2>A translator of mathematical formulas into SPARQL bindings</h2>
       </div>
 
       <div class="well">
 	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Info">General Info.</h3>
+
+	<p>
+	  <b>MINDS</b> is a tool which is able to translate
+	  mathematical expressions
+	  into <a href="https://www.w3.org/TR/sparql11-overview/">SPARQL
+	  1.1</a> bindings. In a nutshell, it provides a python script
+	  which is able to parse mathematical formulas and then
+	  translates recursively the discovered patterns into SPARQL
+	  compliant sequences.
+	</p>
+	<p>
+	  The translator has been currently tested with python version
+	  <i>2.7.12</i>. In addition, it requires the use of external
+	  scripts (which are all embedded locally inside this
+	  repository) for specific tasks:
+	</p>
+	<ul>
+	  <li>
+	    <i>Lexing</i> and <i>Parsing</i> the mathematical
+	    expressions is done using a dedicated tool base on Lex and Yacc called <a href="https://github.com/dabeaz/ply">ply</a>.
+	  </li>
+	  <li>
+	    <i>Coloring</i> the terminal inside the python-shell is
+	    done
+	    using <a href="https://github.com/tartley/colorama">colorama</a>
+	    which presents the advantage of coloring python-shells on
+	    multiple platforms!
+	  </li>
+	</ul>
+	
       </div>
       
       <div class="well">
