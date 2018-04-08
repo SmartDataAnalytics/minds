@@ -39,6 +39,7 @@
 	    <li><a href="#Info">General</a></li>
             <li><a href="#HowTo">How-To?</a></li>
             <li><a href="#Details">Technical Details</a></li>
+	    <li><a href="#Examples">Practical Examples</a></li>
 	    <li><a href="#Contact">Team &amp; Contact</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More...<span class="caret"></span></a>
@@ -62,6 +63,15 @@
       <div class="jumbotron">
         <h1>MINDS - Maths INsiDe SPARQL</h1>
         <h2>A translator of mathematical formulas into SPARQL bindings</h2>
+	<br/>
+	<ul>
+	  <li>
+	    Source code available from <a href="https://github.com/SmartDataAnalytics/minds">GitHub</a>
+	  </li>
+	  <li>
+	    Technical/Scientifc <a href="">report</a>
+	  </li>
+	</ul>
       </div>
 
       <div class="well">
@@ -100,10 +110,131 @@
       
       <div class="well">
 	<h3 style="padding-top: 50px ; margin-top: -40px;" id="HowTo">How-To?</h3>
+	<p>
+	  Practically, MINDS is an external software which can be run
+	  when designing SPARQL queries. It is developed in
+	  <i>Python</i> and its core currently represents about 500
+	  lines of code. Technically, the given formula is parsed
+	  using a dedicated implementation of the popular Lex and Yacc
+	  tools for Python named
+	  <a href="https://github.com/dabeaz/ply">PLY</a>. Then, once
+	  the formula is split into tokens, the translating rules are
+	  applied recursively to generate the final result. For
+	  instance, <i>2018-?Y</i> is translated into:
+	</p>
+	<pre>
+#math2sparql > 2018-?Y
+BIND ( ( FLOOR((2018-xsd:double(?Y))*100)/100 ) AS ?result )</pre>
+	<p>
+	  Even for such a simple formula, the bindin already implies
+	  specifities. First, the binding specifies that \texttt{?Y}
+	  should be considered as a double using the SPARQL
+	  standardized syntax using the <i>xsd</i> prefix which makes
+	  the links with XML; and second, it truncates the result to
+	  keep only two digits of precision with the FLOOR keyword of
+	  the language. Actually, this precision parameter can be set
+	  by the user:
+	</p>
+	<pre>
+#math2sparql > precision = 5
+#math2sparql > 2018-?Y
+BIND ( ( FLOOR((2018-xsd:double(?Y))*100000)/100000 ) AS ?result )</pre>
+	<p>
+	  Therefore, MINDS is still relevant to handle even simple
+	  expressions that are cumbersome to express in SPARQL such as
+	  a square Euclidean distance:
+	</p>
+	<pre>
+#math2sparql > (?x1-?x2)**2 + (?y1-?y2)**2
+BIND(
+ (
+  FLOOR(
+   (
+    (1*(xsd:double(?x1)-xsd:double(?x2))*(xsd:double(?x1)-xsd:double(?x2)))+
+    (1*(xsd:double(?y1)-xsd:double(?y2))*(xsd:double(?y1)-xsd:double(?y2)))
+   )*100
+  )/100
+ ) AS ?result
+)</pre>
+	<p>
+	  Moreover, our solution also provides several translation
+	  rules to deal with mathematical functions <i>e.g.</i>
+	  trigonometric functions and even with functions of multiple
+	  variables <i>e.g.</i> atan2. Nonetheless, these additional
+	  functions are not part of the standard and have to be
+	  expressed only using allowed SPARQL operators:
+	  MINDS is then able to compute approximations to translate
+	  into bindings these functions. Indeed, it uses when
+	  necessary a series decomposition and technically a new binding is
+	  generated for each series so that the query evaluator might
+	  be able to store the sub-result. For instance, considering
+	  <i>x**2 + exp(y+3z)</i> which involved the computation of
+	  the exponential of a linear expression, MINDS returns:
+	</p>
+	<pre>
+#math2sparql > ?X**2 + exp (?Y + 3 * ?Z)
+BIND ((0+(1)/1.0                              # $1$
+  +(1*(xsd:double(?Y)+3*xsd:double(?Z)))/1.0  # y+3z
+  +(1*(xsd:double(?Y)+3*xsd:double(?Z))
+     *(xsd:double(?Y)+3*xsd:double(?Z)))/2.0  # (y+3z)^2/(2!)
+  +(1*(xsd:double(?Y)+3*xsd:double(?Z))
+     *(xsd:double(?Y)+3*xsd:double(?Z))
+     *(xsd:double(?Y)+3*xsd:double(?Z)))/6.0  # (y+3z)^3/(3!)
+  +(1*(xsd:double(?Y)+3*xsd:double(?Z))
+     *(xsd:double(?Y)+3*xsd:double(?Z))
+     *(xsd:double(?Y)+3*xsd:double(?Z))
+     *(xsd:double(?Y)+3*xsd:double(?Z)))/24.0 # (y+3z)^4/(4!)
+)AS ?sub1)
+BIND ( ( FLOOR(( 
+    (1*xsd:double(?X)*xsd:double(?X)) +?sub1  # x**2 + sub_1
+)*100)/100 ) AS ?result )</pre>
+	<p>
+	  As expected, MINDS automatically converts the exponential
+	  part into an approximation using the classic series of the
+	  exponential; in this case only the first five terms of the
+	  series where considered. Moreover, it is also important to
+	  mention that MINDS allows query designers to choose as a
+	  parameter this number of terms, for example:
+	</p>
+	<pre>
+#math2sparql > terms = 7</pre>
+	<p>
+	  Moreover, it is able to understand any kind of combination
+	  using its recognized keywords and it generates recursively
+	  the sub-bindings when necessary.
+	</p>
       </div>
 
       <div class="well">
 	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Details">Technical Details</h3>
+	<p>
+	  We describe below the grammar which is syntactically
+	  understood by MINDS. In particular, our translator is able
+	  to deal with the four basic operators of SPARQL (<i>i.e.</i>
+	  + - * /) extended with the power operator (** in MINDS)
+	  while respecting conventional priorities. Moreover, our
+	  solution also provides several translation rules to deal
+	  with mathematical functions <i>e.g.</i> trigonometric
+	  functions and even with functions of multiple variables
+	  <i>e.g.</i> atan2.
+	</p>
+	<pre>
+Expression = Expression BinOp Expression
+           | Expression ** [:digit:]
+           | LeftOp Expression
+           | BiParamOp Expression , Expression
+           | ( Expression )
+           | ?[:Alphanum:]
+           | [:digit:].[:digit:]
+     BinOp = + | - | * | /
+    LeftOp = ln  | exp | sqrt
+           | sin | cos | tan
+           | -
+ BiParamOp = atan2</pre>
+      </div>
+
+      <div class="well">
+	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Examples">Practical Examples</h3>
       </div>
       
       <div class="well">
