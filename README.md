@@ -24,9 +24,15 @@ tasks:
 - __Lexing__ and __Parsing__ the maths expressions is done using the
   [ply](https://github.com/dabeaz/ply) library.
 
-- __Coloring__ the terminal inside the python-shell is done using to
+- __Coloring__ the terminal inside the python-shell is done using
   [colorama](https://github.com/tartley/colorama) which presents the
   advantage of coloring python-shells on multiple platforms!
+
+How-To
+------
+
+__MINDS__ provides currently a command-line interface which can be
+launched from the terminal.
 
 License
 -------
