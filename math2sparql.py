@@ -75,11 +75,12 @@ class Parser:
 class Calc(Parser):
 
     tokens = (
-        'NAME', 'NUMBER', 'VAR',
+        'NAME', 'NUMBER', 'VAR', 'COMMA',
         'PLUS', 'MINUS', 'POW', 'TIMES', 'DIVIDE',
         'EQUALS',
         'EXP', 'LN', 'SQRT',
         'SIN', 'COS', 'TAN',
+        'ATAN', 'ATAN2',
         'LPAREN', 'RPAREN',
         'HELP', 'PRECISION', 'TERM',
     )
@@ -92,12 +93,15 @@ class Calc(Parser):
     t_TIMES = r'\*'
     t_DIVIDE = r'/'
     t_EQUALS = r'='
+    t_COMMA = r','
     t_EXP = r'[Ee][Xx][Pp]'
     t_LN = r'[Ll][Nn]'
     t_SQRT = r'[Ss][Qq][Rr][Tt]'
     t_SIN = r'[Ss][Ii][Nn]'
     t_COS = r'[Cc][Oo][Ss]'
     t_TAN = r'[Tt][Aa][Nn]'
+    t_ATAN = r'[Aa][Tt][Aa][Nn]'
+    t_ATAN2 = r'[Aa][Tt][Aa][Nn][2]'
     t_LPAREN = r'\('
     t_RPAREN = r'\)'
     t_HELP = r'[Hh][Ee][Ll][Pp]'
@@ -131,8 +135,10 @@ class Calc(Parser):
         ('left', 'PLUS', 'MINUS'),
         ('left', 'TIMES', 'DIVIDE'),
         ('left', 'POW'),
+        ('left', 'COMMA'),
         ('right', 'EXP', 'LN', 'SQRT'),
-        ('right', 'SIN', 'COS', 'TAN'),
+        ('right', 'SIN', 'COS', 'TAN', 'ATAN'),
+        ('right', 'ATAN2'),
         ('right', 'UMINUS'),
     )
 
@@ -142,7 +148,7 @@ class Calc(Parser):
             """
 Several operators are handle yet according the following table:
 
-            +\n\t-\n\t*\n\t/\n\t**\n\tsin\n\tcos\n\ttan\n\texp\n\tln\n\tsqrt\n\tTODO: log, cotan, ...
+        +\n\t-\n\t*\n\t/\n\t**\n\tsin\n\tcos\n\ttan\n\tatan\n\tatan2\n\texp\n\tln\n\tsqrt
             """)
 
     def p_statement_assign(self, p):
@@ -302,6 +308,52 @@ Several operators are handle yet according the following table:
         print("BIND ((" + cosseries + ")AS ?sub"+str(subresult+1)+")\n")
         p[0] = "?sub"+str(subresult)+"/?sub"+str(subresult+1)
         subresult += 2
+
+    def p_expression_atan(self, p):
+        'expression : ATAN expression %prec ATAN'
+        global subresult
+        atanseries= "0"
+        for n in range(0,seriesdev):
+            x = "1"
+            for i in range(0,2*n+1):
+                x = x + "*" + str(p[2])
+            x = "("+x+")"
+            atanseries = atanseries + "+" + str((-1)**n) + "*" + x + "/" + str(2*n+1)+".0" + "\n"
+        print("BIND ((" + atanseries + ")AS ?sub"+str(subresult)+")\n")
+        p[0] = "?sub"+str(subresult)
+        subresult += 1
+
+    def p_expression_atan2(self, p):
+        'expression : ATAN2 expression COMMA expression %prec COMMA'
+        global subresult
+        print("BIND ((" + str(p[2])+"*"+str(p[2])+"+"+str(p[4])+"*"+str(p[4]) + ")AS ?sub"+str(subresult)+")\n")
+        lnseries= "0"
+        expseries= "0"
+        for n in range(0,seriesdev):
+            x = "1"
+            for i in range(0,2*n+1):
+                x = x + "*" + "(( ?sub"+str(subresult)+"-1)/( ?sub"+str(subresult)+"+1))"
+            x = "("+x+")"
+            lnseries = lnseries + "+" + x + "/" + str(2*n+1)+".0" + "\n"
+        print("BIND ((" + lnseries + ")AS ?sub"+str(subresult+1)+")\n") # Remove the '2*' of the ln series here !!!!
+        for n in range(0,seriesdev):
+            x = "1"
+            for i in range(0,n):
+                x = x + "*" + "?sub"+str(subresult+1)
+            x = "("+x+")"
+            expseries = expseries + "+" + x + "/" + str(math.factorial(n))+".0" + "\n"
+        print("BIND ((" + expseries + ")AS ?sub"+str(subresult+2)+")\n")
+        print("BIND ((" + str(p[2]) + "/( ?sub" + str(subresult+2) +"+"+str(p[4])+")"+ ")AS ?sub"+str(subresult+3)+")\n")
+        atanseries= "0"
+        for n in range(0,seriesdev):
+            x = "1"
+            for i in range(0,2*n+1):
+                x = x + "* ?sub" + str(subresult+3)
+            x = "("+x+")"
+            atanseries = atanseries + "+" + str((-1)**n) + "*" + x + "/" + str(2*n+1)+".0" + "\n"
+        print("BIND ((" + atanseries + ")AS ?sub"+str(subresult+4)+")\n")
+        p[0] = "2 * ?sub"+str(subresult+4)
+        subresult += 5
         
     def p_expression_group(self, p):
         'expression : LPAREN expression RPAREN'
