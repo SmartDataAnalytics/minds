@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/127883483.svg)](https://zenodo.org/badge/latestdoi/127883483)
+
 MINDS
 =====
 
