@@ -242,8 +242,75 @@ Expression = Expression BinOp Expression
 	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Examples">Practical Examples</h3>
 	<p>
 	  We present here several practical queries using popular
-	  opened SPARQL endpoints. Actually,
+	  opened SPARQL endpoints. Actually, since widely used SPARQL
+	  endpoints are based on famous engines (<i>e.g.</i> Virtuoso
+	  or JenaFuseki), we consider the possibility of directly
+	  demonstrate the power and the accuracy of MINDS approach
+	  using their own interfaces. Indeed, the idea here is to
+	  evaluate mathematical formulas for several values using
+	  (when possible) the provided built-in functions of these
+	  evaluators and compare the results with various MINDS
+	  approximations <i>i.e.</i> when series are involved various
+	  number of terms are presented.
 	</p>
+	<p>
+	  Practically, to compare various SPARQL engines, we consider
+	  these public SPARQL endpoints:
+	</p>
+	<ul>
+	  <li>
+	    <a href="http://wiki.dbpedia.org/">DBpedia</a> which
+	    uses <a href="https://virtuoso.openlinksw.com/">Virtuoso</a>
+	    to present a linked version of Wikipedia;
+	  </li>
+	  <li>
+	    <a href="http://factforge.net/">FactForge</a> which
+	    uses <a href="https://ontotext.com/products/graphdb/">GraphDB</a>
+	    to present news about people, organizations and locations;
+	  </li>
+	  <li>
+	    <a href="http://zbw.eu/beta/sparql-lab/about/">ZBW
+	    Labs</a> which
+	    uses <a href="https://jena.apache.org/documentation/fuseki2/">JenaFuseki</a>
+	    to present to data from the ZBW Leibniz Information Centre
+	    of Economics and from a few other datasets.
+	  </li>
+	</ul>
+	<p>
+	  The considered mathematical formulas are the following:
+	</p>
+	<ol>
+	  <li>
+	    A basic addition <code>?x + 4</code>. Try with
+	    [<a href="http://dbpedia.org/snorql/?query=SELECT+*+WHERE+%7B%0D%0A+VALUES+%3Fx+%7B+0.1+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0D%0A+BIND+%28+%28+FLOOR%28%28xsd%3Adouble%28%3Fx%29--4%29*100%29%2F100+%29+AS+%3Fresult+%29%0D%0A%7D">DBpedia</a>][<a href="http://factforge.net/sparql?name=&infer=true&sameAs=true&query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((xsd%3Adouble(%3Fx)--4)*100)%2F100+)+AS+%3Fresult+)%0A%7D">FactForge</a>][<a href="http://zbw.eu/beta/sparql-lab/?endpoint=http://zbw.eu/beta/sparql/stw/query&queryRef=https://api.github.com/repos/zbw/sparql-queries/contents/stw/search_concepts_by_text.rq#query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((xsd%3Adouble(%3Fx)--4)*100)%2F100+)+AS+%3Fresult+)%0A%7D%0A&endpoint=http%3A%2F%2Fzbw.eu%2Fbeta%2Fsparql%2Fstw%2Fquery">ZBW
+	    Labs</a>].
+	  </li>
+	  <!-- <li> -->
+	  <!--   An addition between two variables <code>?x + ?y</code>. Try with -->
+	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
+	  <!--   Labs</a>]. -->
+	  <!-- </li> -->
+	  <!-- <li> -->
+	  <!--   A power function <code>?x**4</code>. Try with -->
+	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
+	  <!--   Labs</a>]. -->
+	  <!-- </li> -->
+	  <!-- <li> -->
+	  <!--   A trigonometric function involving a multiplication <code>?y * sin(?x)</code>. Try with -->
+	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
+	  <!--   Labs</a>]. -->
+	  <!-- </li> -->
+	  <li>
+	    A natural logarithm <code>ln(?x)</code>. Try with
+	    [<a href="http://dbpedia.org/snorql/?query=SELECT+*+WHERE+%7B%0D%0A+VALUES+%3FV+%7B+0.1+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0D%0A+BIND+%28%28+bif%3Alog%28%3FV%29+%29+AS+%3FBuiltInLog+%29%0D%0A+BIND+%28%28+2*%28%3FV-1%29%2F%28%3FV--1.%29+%29+AS+%3FOneTerm+%29%0D%0A+BIND+%28%28+2*%28+%28%3FV-1%29%2F%28%3FV--1.%29+--%0D%0A+++++++++++++%281%2F3.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29--%0D%0A+++++++++++++%281%2F5.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29+%29%0D%0A++++++++%29+as+%3FThreeTerms+%29%0D%0A+BIND+%28%28+2*%28+%28%3FV-1%29%2F%28%3FV--1.%29+--%0D%0A+++++++++++++%281%2F3.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29--%0D%0A+++++++++++++%281%2F5.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29--%0D%0A+++++++++++++%281%2F7.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29--%0D%0A+++++++++++++%281%2F9.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29--%0D%0A+++++++++++++%281%2F11.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29--%0D%0A+++++++++++++%281%2F13.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29*%28%3FV-1%29%2F%28%3FV--1.%29+%29%0D%0A++++++++%29+as+%3FSevenTerms+%29%0D%0A%7D">DBpedia</a>][<a href="http://factforge.net/sparql?name=&infer=true&sameAs=true&query=PREFIX%20f:%20%3Chttp:%2F%2Fwww.ontotext.com%2Fsparql%2Ffunctions%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20VALUES%20%3FV%20%7B%200.1%200.2%200.5%201%202%203%204%205%206%207%208%209%2010%2020%2050%20100%20%7D%0A%20BIND%20((%20f:log(%3FV)%20)%20AS%20%3FBuiltInLog%20)%0A%20BIND%20((%202*(%3FV-1)%2F(%3FV--1.0)%20)%20AS%20%3FOneTerm%20)%0A%20BIND%20((%202*(%20(%3FV-1)%2F(%3FV--1.0)%20--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F3.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F5.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)%20)%0A%20%20%20%20%20%20%20%20)%20as%20%3FThreeTerms%20)%0A%20BIND%20((%202*(%20(%3FV-1)%2F(%3FV--1.0)%20--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F3.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F5.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F7.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F9.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F11.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(1%2F13.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)%20)%0A%20%20%20%20%20%20%20%20)%20as%20%3FSevenTerms%20)%0A%7D">FactForge</a>][<a href="http://zbw.eu/beta/sparql-lab/?endpoint=http://zbw.eu/beta/sparql/stw/query&queryRef=https://api.github.com/repos/zbw/sparql-queries/contents/stw/search_concepts_by_text.rq#query=%23+Search+concepts+by+text+(e.g.%2C+'labour')%0A%23%0A%23+Covers+concepts+from+different+(mapped)+datasets%2C%0A%23+and%2C+from+STW%2C+different+subclasses+of+skos%3AConcept%0A%23%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0APREFIX+text%3A+%3Chttp%3A%2F%2Fjena.apache.org%2Ftext%23%3E%0APREFIX+math%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2005%2Fxpath-functions%2Fmath%23%3E%0APREFIX+ma%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fma-ont%23%3E%0A%23%0ASELECT++*%0AWHERE+%7B%0A+VALUES+%3FV+%7B+0.1+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+((+math%3Alog(%3FV)+)+AS+%3FBuiltInLog+)%0A+BIND+((+2*(%3FV-1)%2F(%3FV--1.0)+)+AS+%3FOneTerm+)%0A+BIND+((+2*(+(%3FV-1)%2F(%3FV--1.0)+--%0A+++++++++++++(1%2F3.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A+++++++++++++(1%2F5.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)+)%0A++++++++)+as+%3FThreeTerms+)%0A+BIND+((+2*(+(%3FV-1)%2F(%3FV--1.0)+--%0A+++++++++++++(1%2F3.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A+++++++++++++(1%2F5.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A+++++++++++++(1%2F7.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A+++++++++++++(1%2F9.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A+++++++++++++(1%2F11.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)--%0A+++++++++++++(1%2F13.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)*(%3FV-1)%2F(%3FV--1.0)+)%0A++++++++)+as+%3FSevenTerms+)%0A%7D%0A&endpoint=http%3A%2F%2Fzbw.eu%2Fbeta%2Fsparql%2Fstw%2Fquery">ZBW
+	    Labs</a>].
+	  </li>
+	  <!-- <li> -->
+	  <!--   <code></code>. Try with -->
+	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
+	  <!--   Labs</a>]. -->
+	  <!-- </li> -->
+	</ol>
       </div>
       
       <div class="well">
