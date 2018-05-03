@@ -285,16 +285,16 @@ Expression = Expression BinOp Expression
 	    [<a href="http://dbpedia.org/snorql/?query=SELECT+*+WHERE+%7B%0D%0A+VALUES+%3Fx+%7B+0.1+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0D%0A+BIND+%28+%28+FLOOR%28%28xsd%3Adouble%28%3Fx%29--4%29*100%29%2F100+%29+AS+%3Fresult+%29%0D%0A%7D">DBpedia</a>][<a href="http://factforge.net/sparql?name=&infer=true&sameAs=true&query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((xsd%3Adouble(%3Fx)--4)*100)%2F100+)+AS+%3Fresult+)%0A%7D">FactForge</a>][<a href="http://zbw.eu/beta/sparql-lab/?endpoint=http://zbw.eu/beta/sparql/stw/query&queryRef=https://api.github.com/repos/zbw/sparql-queries/contents/stw/search_concepts_by_text.rq#query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.2+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((xsd%3Adouble(%3Fx)--4)*100)%2F100+)+AS+%3Fresult+)%0A%7D%0A&endpoint=http%3A%2F%2Fzbw.eu%2Fbeta%2Fsparql%2Fstw%2Fquery">ZBW
 	    Labs</a>].
 	  </li>
-	  <!-- <li> -->
-	  <!--   An addition between two variables <code>?x + ?y</code>. Try with -->
-	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
-	  <!--   Labs</a>]. -->
-	  <!-- </li> -->
-	  <!-- <li> -->
-	  <!--   A power function <code>?x**4</code>. Try with -->
-	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
-	  <!--   Labs</a>]. -->
-	  <!-- </li> -->
+	  <li>
+	    An addition between two variables <code>?x + ?y</code>. Try with
+	    [<a href="http://dbpedia.org/snorql/?query=SELECT+*+WHERE+%7B%0D%0A+VALUES+%3Fx+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0D%0A+VALUES+%3Fy+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0D%0A+BIND+%28+%28+FLOOR%28%28xsd%3Adouble%28%3Fx%29--xsd%3Adouble%28%3Fy%29%29*100%29%2F100+%29+AS+%3Fresult+%29%0D%0A%7D">DBpedia</a>][<a href="http://factforge.net/sparql?name=&infer=true&sameAs=true&query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+VALUES+%3Fy+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((xsd%3Adouble(%3Fx)--xsd%3Adouble(%3Fy))*100)%2F100+)+AS+%3Fresult+)%0A%7D">FactForge</a>][<a href="http://zbw.eu/beta/sparql-lab/?endpoint=http://zbw.eu/beta/sparql/stw/query&queryRef=https://api.github.com/repos/zbw/sparql-queries/contents/stw/search_concepts_by_text.rq#query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+VALUES+%3Fy+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((xsd%3Adouble(%3Fx)--xsd%3Adouble(%3Fy))*100)%2F100+)+AS+%3Fresult+)%0A%7D&endpoint=http%3A%2F%2Fzbw.eu%2Fbeta%2Fsparql%2Fstw%2Fquery">ZBW
+	    Labs</a>].
+	  </li>
+	  <li>
+	    A power function <code>?x**4</code>. Try with
+	    [<a href="http://dbpedia.org/snorql/?query=SELECT+*+WHERE+%7B%0D%0A+VALUES+%3Fx+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0D%0A+BIND+%28+%28+FLOOR%28%28+%281*xsd%3Adouble%28%3Fx%29*xsd%3Adouble%28%3Fx%29*xsd%3Adouble%28%3Fx%29*xsd%3Adouble%28%3Fx%29%29+%29*100%29%2F100+%29+AS+%3Fresult+%29%0D%0A%7D">DBpedia</a>][<a href="http://factforge.net/sparql?name=&infer=true&sameAs=true&query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((+(1*xsd%3Adouble(%3Fx)*xsd%3Adouble(%3Fx)*xsd%3Adouble(%3Fx)*xsd%3Adouble(%3Fx))+)*100)%2F100+)+AS+%3Fresult+)%0A%7D">FactForge</a>][<a href="http://zbw.eu/beta/sparql-lab/?endpoint=http://zbw.eu/beta/sparql/stw/query&queryRef=https://api.github.com/repos/zbw/sparql-queries/contents/stw/search_concepts_by_text.rq#query=PREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0ASELECT+*+WHERE+%7B%0A+VALUES+%3Fx+%7B+0.5+1+2+3+4+5+6+7+8+9+10+20+50+100+%7D%0A+BIND+(+(+FLOOR((+(1*xsd%3Adouble(%3Fx)*xsd%3Adouble(%3Fx)*xsd%3Adouble(%3Fx)*xsd%3Adouble(%3Fx))+)*100)%2F100+)+AS+%3Fresult+)%0A%7D&endpoint=http%3A%2F%2Fzbw.eu%2Fbeta%2Fsparql%2Fstw%2Fquery">ZBW
+	    Labs</a>].
+	  </li>
 	  <!-- <li> -->
 	  <!--   A trigonometric function involving a multiplication <code>?y * sin(?x)</code>. Try with -->
 	  <!--   [<a href="">DBpedia</a>][<a href="">FactForge</a>][<a href="">ZBW -->
