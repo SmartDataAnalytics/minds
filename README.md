@@ -19,7 +19,7 @@ Dependencies
 ------------
 
 The translator has been currently tested with python version
-__2.7.12__. In addition, it requires the use of external scripts
+__3.6.9__. In addition, it requires the use of external scripts
 (which are all embedded locally inside this repository) for specific
 tasks:
 
@@ -34,7 +34,7 @@ How-To
 ------
 
 __MINDS__ provides currently a command-line interface which can be
-launched from the terminal.
+launched from the terminal with: ``python3 math2sparql.py``
 
 License
 -------
