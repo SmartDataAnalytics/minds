@@ -1,4 +1,4 @@
-# Some rules to ignore files i git.
+# Some rules to ignore files in git.
 
 # Files from python.
 *.pyc
