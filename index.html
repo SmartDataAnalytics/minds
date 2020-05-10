@@ -48,7 +48,9 @@
                 <li><a href="https://www.apache.org/licenses/LICENSE-2.0">License</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Affiliations</li>
-                <li><a target="_blank" href="http://sda.cs.uni-bonn.de/">SDA</a></li>
+		<li><a target="_blank" href="https://www.adaptcentre.ie/">ADAPT Centre</a></li>
+		<li><a target="_blank" href="https://www.tcd.ie/">Trinity College Dublin</a></li>
+                <li><a target="_blank" href="http://sda.cs.uni-bonn.de/">Smart Data Analytics</a></li>
 		<li><a target="_blank" href="https://www.uni-bonn.de/the-university?set_language=en">Bonn University</a></li>
 		<li><a target="_blank" href="https://www.iais.fraunhofer.de/en.html">Fraunhofer IAIS</a></li>
               </ul>
@@ -68,11 +70,11 @@
 	  <li>
 	    Source code available from <a href="https://github.com/SmartDataAnalytics/minds">GitHub</a>
 	  </li>
-	  <li>
-	    Release
-	    v0.1: <a href="https://github.com/SmartDataAnalytics/minds/archive/v0.1.zip">.zip</a>
-	    or <a href="https://github.com/SmartDataAnalytics/minds/archive/v0.1.tar.gz">.tar.gz</a>
-	  </li>
+	  <!-- <li> -->
+	  <!--   Release -->
+	  <!--   v0.1: <a href="https://github.com/SmartDataAnalytics/minds/archive/v0.1.zip">.zip</a> -->
+	  <!--   or <a href="https://github.com/SmartDataAnalytics/minds/archive/v0.1.tar.gz">.tar.gz</a> -->
+	  <!-- </li> -->
 	  <li>
 	    Technical/Scientifc <a href="./MINDS_v0.1_report.pdf">report</a>
 	  </li>
@@ -93,7 +95,7 @@
 	</p>
 	<p>
 	  The translator has been currently tested with python version
-	  <i>2.7.12</i>. In addition, it requires the use of external
+	  <i>3.6.9</i>. In addition, it requires the use of external
 	  scripts (which are all embedded locally inside this
 	  repository) for specific tasks:
 	</p>
@@ -125,11 +127,11 @@
 	  <a href="https://github.com/dabeaz/ply">PLY</a>. Then, once
 	  the formula is split into tokens, the translating rules are
 	  applied recursively to generate the final result. For
-	  instance, <i>2018-?Y</i> is translated into:
+	  instance, <i>2020-?Y</i> is translated into:
 	</p>
 	<pre>
-#math2sparql > 2018-?Y
-BIND ( ( FLOOR((2018-xsd:double(?Y))*100)/100 ) AS ?result )</pre>
+#math2sparql > 2020-?Y
+BIND ( ( FLOOR((2020-xsd:double(?Y))*100)/100 ) AS ?result )</pre>
 	<p>
 	  Even for such a simple formula, the bindin already implies
 	  specifities. First, the binding specifies that \texttt{?Y}
@@ -142,8 +144,8 @@ BIND ( ( FLOOR((2018-xsd:double(?Y))*100)/100 ) AS ?result )</pre>
 	</p>
 	<pre>
 #math2sparql > precision = 5
-#math2sparql > 2018-?Y
-BIND ( ( FLOOR((2018-xsd:double(?Y))*100000)/100000 ) AS ?result )</pre>
+#math2sparql > 2020-?Y
+BIND ( ( FLOOR((2020-xsd:double(?Y))*100000)/100000 ) AS ?result )</pre>
 	<p>
 	  Therefore, MINDS is still relevant to handle even simple
 	  expressions that are cumbersome to express in SPARQL such as
@@ -317,8 +319,10 @@ Expression = Expression BinOp Expression
 	<h3 style="padding-top: 50px ; margin-top: -40px;" id="Contact">Team</h3>
 	<p>
 	  Minds has been developed by
-	  the <a href="http://sda.cs.uni-bonn.de/">Smart Data
-	  Analytics</a> group from
+	  the <a href="https://www.adaptcentre.ie/">ADAPT Centre</a>
+	  from the <a href="https://www.tcd.ie/">Trinity College
+	  Dublin</a>, the <a href="http://sda.cs.uni-bonn.de/">Smart
+	  Data Analytics</a> group from
 	  the <a href="https://www.uni-bonn.de/startpage?set_language=en">Univeristy
 	  of Bonn</a> and
 	  the <a href="http://www.iais.fraunhofer.de/en.html">Fraunhofer
@@ -330,7 +334,7 @@ Expression = Expression BinOp Expression
     
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">MINDS, 2018</p>
+        <p class="text-muted">MINDS, 2020</p>
       </div>
     </footer>
     
