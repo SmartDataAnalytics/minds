@@ -15,7 +15,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 import os
 import math             # For the factorial function.
-import readline         # To have interactive input-line.
+#import readline         # To have interactive input-line.
 
 from colorama import init, Fore
 init()
@@ -62,7 +62,7 @@ class Parser:
         while 1:
             try:
                 subresult = 1 # Reset the subresult counter.
-                s = raw_input(Fore.BLUE+'math2sparql > '+Fore.RESET)
+                s = input(Fore.BLUE+'math2sparql > '+Fore.RESET)
             except EOFError:
                 break
             if not s:
